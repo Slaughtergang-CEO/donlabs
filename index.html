@@ -1077,10 +1077,10 @@
                 if (isAnnual) {
                     const annualSum = totalMonthly * 12;
                     priceMonthlyEl.innerText = `${annualSum.toLocaleString('de-DE', {minimumFractionDigits: 0})} € / Jahr`;
-                    suffix.innerHTML = `Entspricht ${totalMonthly.toFixed(0)} € / Monat (inkl. 20% Jahresvorteil)`;
+                    suffix.innerHTML = `12 Monate Laufzeit inkl. 20% Rabatt (entspricht ${totalMonthly.toFixed(0)} €/Mo.). Nach § 19 UStG umsatzsteuerbefreit.`;
                 } else {
                     priceMonthlyEl.innerText = `${totalMonthly.toFixed(0)} € / Monat`;
-                    suffix.innerText = "Monatlich kündbar. Nach § 19 UStG umsatzsteuerbefreit.";
+                    suffix.innerText = "6 Monate Mindestlaufzeit, danach monatlich kündbar. Nach § 19 UStG umsatzsteuerbefreit.";
                 }
             }
 
