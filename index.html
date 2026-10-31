@@ -762,13 +762,38 @@
     </footer>
 
     <!-- Cookie Banner -->
-    <div id="cookie-banner" class="fixed bottom-4 left-4 right-4 md:left-auto md:max-w-md bg-white border border-slate-200 p-5 rounded-2xl shadow-2xl z-50 flex flex-col sm:flex-row items-center gap-4 transition-all duration-300">
-        <p class="text-[11px] text-slate-600 leading-relaxed flex-1">
-            Wir verwenden technisch notwendige Cookies, um Kernfunktionen auf donlabs.de bereitzustellen.
-        </p>
-        <button onclick="document.getElementById('cookie-banner').classList.add('hidden')" class="w-full sm:w-auto px-5 py-2.5 bg-brand-navy text-white text-[10px] font-bold font-mono uppercase tracking-wider rounded-xl hover:bg-slate-800 transition-all shrink-0">
-            Akzeptieren
-        </button>
+    <!-- Consent Modal (Full-Screen Overlay im Donlabs-Style) -->
+    <div id="cookie-overlay" class="fixed inset-0 bg-brand-navy/80 backdrop-blur-md z-[99999] flex items-center justify-center p-4 transition-opacity duration-300">
+        <div class="bg-white border border-slate-200 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl text-center relative">
+            <div class="w-12 h-12 rounded-2xl bg-brand-base border border-slate-200 flex items-center justify-center mx-auto mb-4 text-brand-navy">
+                <i data-lucide="shield-check" class="w-6 h-6 text-brand-accent"></i>
+            </div>
+            
+            <span class="text-[10px] uppercase font-mono tracking-widest text-slate-400 block mb-1">Datenschutz &amp; Transparenz</span>
+            <h3 class="font-serif text-2xl font-bold text-brand-navy tracking-tight">Privatsphäre-Einstellungen</h3>
+            
+            <p class="text-xs text-slate-600 mt-3 leading-relaxed">
+                Wir nutzen technisch notwendige Cookies sowie Analyse-Tools (wie Microsoft Clarity), um das Nutzerverhalten zu verstehen und die Performance unserer Systeme zu optimieren. Daten werden anonymisiert verarbeitet.
+            </p>
+
+            <div class="mt-6 flex flex-col sm:flex-row gap-3 justify-center items-center font-mono">
+                <!-- Primärer Button (Auffällig im Donlabs Brand-Look) -->
+                <button onclick="acceptAllCookies()" class="w-full sm:w-auto px-6 py-3.5 bg-brand-navy hover:bg-slate-800 text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all shadow-md shrink-0">
+                    Alle akzeptieren
+                </button>
+                
+                <!-- Sekundärer Button (DSGVO-konform, dezent) -->
+                <button onclick="acceptEssentialOnly()" class="w-full sm:w-auto px-5 py-3.5 bg-transparent hover:bg-slate-50 border border-slate-200 text-slate-600 hover:text-brand-navy text-xs font-bold uppercase tracking-wider rounded-xl transition-all shrink-0">
+                    Nur essenzielle
+                </button>
+            </div>
+
+            <div class="mt-5 text-[10px] text-slate-400 font-mono flex justify-center gap-4">
+                <button onclick="openLegalModal('datenschutz')" class="hover:underline">Datenschutz</button>
+                <span>&bull;</span>
+                <button onclick="openLegalModal('impressum')" class="hover:underline">Impressum</button>
+            </div>
+        </div>
     </div>
 
     <!-- Modal: Kontakt -->
@@ -1174,9 +1199,52 @@
             }
             lucide.createIcons();
         }
+// ================= CONSENT & MICROSOFT CLARITY =================
+        function loadMicrosoftClarity() {
+            // HIER DEINE ECHTE CLARITY-PROJEKT-ID EINTRAGEN (statt "DEINE_CLARITY_ID"):
+            const clarityId = "DEINE_CLARITY_ID"; 
+            
+            if (window.clarityLoaded || !clarityId || clarityId === "DEINE_CLARITY_ID") return;
+            
+            (function(c,l,a,r,i,t,y){
+                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+            })(window, document, "clarity", "script", clarityId);
+            
+            window.clarityLoaded = true;
+        }
 
-        window.onload = () => {
+        function checkConsent() {
+            const consent = localStorage.getItem('donlabs_cookie_consent');
+            const overlay = document.getElementById('cookie-overlay');
+            
+            if (consent === 'all') {
+                if (overlay) overlay.classList.add('hidden');
+                loadMicrosoftClarity();
+            } else if (consent === 'essential') {
+                if (overlay) overlay.classList.add('hidden');
+                // Keine Tracking-Skripte laden
+            } else {
+                if (overlay) overlay.classList.remove('hidden');
+            }
+        }
+
+        function acceptAllCookies() {
+            localStorage.setItem('donlabs_cookie_consent', 'all');
+            const overlay = document.getElementById('cookie-overlay');
+            if (overlay) overlay.classList.add('hidden');
+            loadMicrosoftClarity();
+        }
+
+        function acceptEssentialOnly() {
+            localStorage.setItem('donlabs_cookie_consent', 'essential');
+            const overlay = document.getElementById('cookie-overlay');
+            if (overlay) overlay.classList.add('hidden');
+        }
+       window.onload = () => {
             updateEngine();
+            checkConsent();
             lucide.createIcons();
         };
     </script>
