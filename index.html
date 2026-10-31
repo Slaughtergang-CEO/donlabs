@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="de" class="scroll-smooth">
+<html lang="de" class="scroll-smooth overflow-x-hidden max-w-full">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Donlabs — High-Performance Web &amp; AI Systems</title>
     
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%230B132B'/%3E%3Ctext x='16' y='70' font-family='Playfair Display, serif' font-size='56' font-weight='700' fill='%23FFFFFF'%3ED%3C/text%3E%3Ctext x='54' y='70' font-family='Playfair Display, serif' font-size='56' font-weight='700' font-style='italic' fill='%23C59B27'%3EL%3C/text%3E%3C/svg%3E">
@@ -52,10 +52,17 @@
     <script src="https://unpkg.com/lucide@0.300.0/dist/umd/lucide.min.js"></script>
 
     <style>
-        body {
+        /* Rigider Schutz gegen horizontalen Scroll/Swipe auf Mobilgeräten */
+        html, body {
+            overflow-x: hidden !important;
+            position: relative;
+            width: 100%;
+            max-width: 100vw;
             background-color: #FAFAFC;
             color: #0B132B;
-            overflow-x: hidden;
+        }
+        * {
+            box-sizing: border-box;
         }
         .bg-grid-pattern {
             background-size: 40px 40px;
@@ -95,17 +102,11 @@
             animation-play-state: paused;
         }
     </style>
-    <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "z68aokxgit");
-</script>
 </head>
-<body class="bg-brand-base text-brand-navy font-sans antialiased selection:bg-brand-navy selection:text-white relative bg-grid-pattern">
+<body class="bg-brand-base text-brand-navy font-sans antialiased selection:bg-brand-navy selection:text-white relative bg-grid-pattern overflow-x-hidden w-full">
 
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[550px] glow-radial blur-[120px] rounded-full -z-10 pointer-events-none"></div>
+    <!-- Glow Hintergrund: Streng eingekapselt gegen Viewport-Überhang -->
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[900px] h-[450px] sm:h-[550px] glow-radial blur-[100px] sm:blur-[120px] rounded-full -z-10 pointer-events-none overflow-hidden"></div>
 
     <!-- Navigation -->
     <nav class="bg-white/90 backdrop-blur-xl sticky top-0 z-50 border-b border-slate-200/80 py-3.5 px-4 sm:px-8 transition-all">
@@ -197,8 +198,8 @@
         </div>
     </header>
 
-    <!-- Infinite Tech Ticker -->
-    <div class="w-full border-y border-slate-200/80 bg-white/60 backdrop-blur-md py-3.5 overflow-hidden select-none mb-12">
+    <!-- Infinite Tech Ticker (Vollständig gegen Screen-Breakout gesichert) -->
+    <div class="w-full max-w-full overflow-hidden border-y border-slate-200/80 bg-white/60 backdrop-blur-md py-3.5 select-none mb-12">
         <div class="animate-marquee flex items-center gap-8 text-[11px] font-mono uppercase tracking-widest text-slate-500 font-semibold">
             <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-brand-accent"></span> Clean Code / Headless</span>
             <span class="text-slate-300">&bull;</span>
@@ -212,7 +213,6 @@
             <span class="text-slate-300">&bull;</span>
             <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-purple-500"></span> Privates GitHub-Repo</span>
             <span class="text-slate-300">&bull;</span>
-            <!-- Duplikat für nahtlosen Endlos-Loop -->
             <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-brand-accent"></span> Clean Code / Headless</span>
             <span class="text-slate-300">&bull;</span>
             <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Google PageSpeed 99+</span>
@@ -341,7 +341,8 @@
             </div>
         </div>
     </section>
-<!-- Referenzen & Qualitätssiegel (Browser Mockup + Trust) -->
+
+    <!-- Referenzen & Qualitätssiegel (Browser Mockup + Trust) -->
     <section id="referenzen" class="py-16 sm:py-24 px-4 sm:px-6 max-w-7xl mx-auto border-t border-slate-200/80">
         <div class="text-center mb-14">
             <span class="font-mono text-brand-accent text-xs uppercase tracking-widest">Ergebnisse &amp; Standards</span>
@@ -659,7 +660,8 @@
             </div>
         </div>
     </section>
-<!-- B2B FAQ Sektion -->
+
+    <!-- B2B FAQ Sektion -->
     <section id="faq" class="py-16 sm:py-24 px-4 sm:px-6 max-w-4xl mx-auto border-t border-slate-200/80">
         <div class="text-center mb-12">
             <span class="font-mono text-brand-accent text-xs uppercase tracking-widest">Häufige Fragen</span>
@@ -761,7 +763,6 @@
         </div>
     </footer>
 
-    <!-- Cookie Banner -->
     <!-- Consent Modal (Full-Screen Overlay im Donlabs-Style) -->
     <div id="cookie-overlay" class="fixed inset-0 bg-brand-navy/80 backdrop-blur-md z-[99999] flex items-center justify-center p-4 transition-opacity duration-300">
         <div class="bg-white border border-slate-200 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl text-center relative">
@@ -876,8 +877,8 @@
                         <p class="mt-1">Der Schutz Ihrer Daten hat für Donlabs höchste Priorität. Personenbezogene Daten werden strikt im Einklang mit der DSGVO verarbeitet.</p>
                         <p class="font-bold text-brand-navy mt-4">2. Verantwortliche Stelle</p>
                         <p class="mt-1">Arda Dönmez (Donlabs), Gierolstraße 35, 53127 Bonn, E-Mail: arda@donlabs.de.</p>
-                        <p class="font-bold text-brand-navy mt-4">3. Hosting</p>
-                        <p class="mt-1">Diese Seite wird auf ISO-27001 zertifizierten Hochleistungsservern innerhalb Deutschlands gehostet.</p>
+                        <p class="font-bold text-brand-navy mt-4">3. Hosting &amp; Content Delivery</p>
+                        <p class="mt-1">Diese Seite wird auf ISO-27001 zertifizierten Hochleistungsservern gehostet.</p>
                         <p class="font-bold text-brand-navy mt-4">4. Kontaktaufnahme per E-Mail &amp; Formular</p>
                         <p class="mt-1">Wenn Sie uns per Kontaktformular oder E-Mail Anfragen zukommen lassen, werden Ihre Angaben zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.</p>
                     `
@@ -1199,12 +1200,11 @@
             }
             lucide.createIcons();
         }
-// ================= CONSENT & MICROSOFT CLARITY =================
+
+        // ================= CONSENT & MICROSOFT CLARITY =================
         function loadMicrosoftClarity() {
-          
-            const clarityId = "z68aokxgit"; 
-            
-            if (window.clarityLoaded || !clarityId || clarityId === "z68aokxgit") return;
+            const clarityId = "z68aokxgit";
+            if (window.clarityLoaded || !clarityId) return;
             
             (function(c,l,a,r,i,t,y){
                 c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -1224,7 +1224,6 @@
                 loadMicrosoftClarity();
             } else if (consent === 'essential') {
                 if (overlay) overlay.classList.add('hidden');
-                // Keine Tracking-Skripte laden
             } else {
                 if (overlay) overlay.classList.remove('hidden');
             }
@@ -1242,7 +1241,8 @@
             const overlay = document.getElementById('cookie-overlay');
             if (overlay) overlay.classList.add('hidden');
         }
-       window.onload = () => {
+
+        window.onload = () => {
             updateEngine();
             checkConsent();
             lucide.createIcons();
